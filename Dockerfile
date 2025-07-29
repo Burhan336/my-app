@@ -1,21 +1,23 @@
-# 1. Base image
-FROM node:18
+# Use a small version of Node.js
+FROM node:18-alpine
 
-# 2. Create app directory
+# Make a folder in the container for your app
 WORKDIR /app
 
-# 3. Install dependencies
+# Copy files into the container
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# 4. Copy app source
+# Copy rest of your code
 COPY . .
 
-# 5. Build the NestJS app
+# Build the app
 RUN npm run build
 
-# 6. Expose app port
+# Open port 3000 for the app
 EXPOSE 3000
 
-# 7. Run the app
+# Start the app
 CMD ["node", "dist/main"]
